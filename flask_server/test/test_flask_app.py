@@ -27,5 +27,4 @@ def test_file_metadata_endpoint_file_not_found(client):
 def test_read_file_endpoint_file_not_found(client):
     response = client.get('/file/5/read/')
     assert response.status_code == 404
-    print(response.text)
     assert response.text == 'File not found. Error code 404'
