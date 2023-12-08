@@ -62,14 +62,14 @@ def get_result(data, backend_type, command_type, output, new_file_name=None) -> 
     Returns formatted results
     '''
     if command_type == 'stat':
-                data_dict = json.loads(data) if backend_type == 'rest' else data
-                create_datetime = datetime.datetime.fromtimestamp(data_dict['create_datetime']).strftime("%Y-%m-%d %H:%M:%S")
-                file_size = int(data_dict['size']) / (1024 ** 1)
-                file_size_mb = int(data_dict['size']) / (1024 ** 2)
-                mime_type = data_dict['mimetype']
-                file_name = data_dict['name']
-                result = f'Create datetime: {create_datetime} File size in Kilobytes: {file_size} File size in Megabytes: {file_size_mb} Mimetype: {mime_type} File name: {file_name}'
-                return result
+        data_dict = json.loads(data) if backend_type == 'rest' else data
+        create_datetime = datetime.datetime.fromtimestamp(data_dict['create_datetime']).strftime("%Y-%m-%d %H:%M:%S")
+        file_size = int(data_dict['size']) / (1024 ** 1)
+        file_size_mb = int(data_dict['size']) / (1024 ** 2)
+        mime_type = data_dict['mimetype']
+        file_name = data_dict['name']
+        result = f'Create datetime: {create_datetime} File size in Kilobytes: {file_size} File size in Megabytes: {file_size_mb} Mimetype: {mime_type} File name: {file_name}'
+        return result
     elif command_type == 'read':
         if output == 'textfile':
             save_text_to_file(text_to_save=data, new_file_name=new_file_name)
@@ -102,7 +102,7 @@ def main():
     args = parser.parse_args()
 
     if args.backend == 'rest':
-            data = get_rest_data(url=args.base_url_rest, uuid=args.uuid, command_type=args.command)
+        data = get_rest_data(url=args.base_url_rest, uuid=args.uuid, command_type=args.command)
     elif args.backend == 'grpc':
         data = get_grcp_data(url=args.grpc_server_url, uuid=args.uuid, command_type=args.command)
 
