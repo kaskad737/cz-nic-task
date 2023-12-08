@@ -17,13 +17,6 @@ class CapitalisedHelpFormatter(argparse.HelpFormatter):
             prefix = 'Usage: '
         return super(CapitalisedHelpFormatter, self).add_usage(usage, actions, groups, prefix)
 
-
-def rest_url_checker(url) -> str:
-    '''
-    Because I start a flask server on port :5000 I made It for test purposes
-    '''
-    return url[:-1] + ':5000' if not url.split('/')[-1] else url
-
 def get_rest_data(url, uuid, command_type) -> str:
     '''
     Get data from rest endpoints
@@ -109,10 +102,8 @@ def main():
     args = parser.parse_args()
 
     if args.backend == 'rest':
-            # Because I start a flask server on port :5000 I made It for test purposes
-            valid_url = rest_url_checker(url=args.base_url_rest)
-            data = get_rest_data(url=valid_url, uuid=args.uuid, command_type=args.command)
-    if args.backend == 'grpc':
+            data = get_rest_data(url=args.base_url_rest, uuid=args.uuid, command_type=args.command)
+    elif args.backend == 'grpc':
         data = get_grcp_data(url=args.grpc_server_url, uuid=args.uuid, command_type=args.command)
 
     result = get_result(data=data, backend_type=args.backend, command_type=args.command, new_file_name=args.file_name, output=args.output)
