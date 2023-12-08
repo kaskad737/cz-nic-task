@@ -54,7 +54,7 @@ def read_file(uuid):
             file_content = f.read()
 
         resp = make_response(file_content, 200)
-        resp.headers['Content-Disposition'] = file_name
+        resp.headers['Content-Disposition'] = f'inline; filename="{file_name}"'
         resp.headers['Content-Type'] = mimetype[0]
 
         return resp
